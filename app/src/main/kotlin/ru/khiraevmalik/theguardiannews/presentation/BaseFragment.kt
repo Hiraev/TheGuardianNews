@@ -12,18 +12,11 @@ abstract class BaseFragment(
         @LayoutRes private val layoutRes: Int
 ) : Fragment() {
 
-    open fun initView() {}
-
     @CallSuper
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View = inflater.inflate(layoutRes, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
 
 }
