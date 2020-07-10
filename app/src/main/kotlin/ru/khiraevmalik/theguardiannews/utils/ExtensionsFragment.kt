@@ -1,4 +1,4 @@
-package ru.khiraevmalik.theguardiannews.extensions
+package ru.khiraevmalik.theguardiannews.utils
 
 import android.os.Bundle
 import android.os.Parcelable
