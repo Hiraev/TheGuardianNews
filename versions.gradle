@@ -1,0 +1,4 @@
+ext {
+    version_code = 1 // Application build number
+    version_name = "1.0.0" // Application version number
+}
