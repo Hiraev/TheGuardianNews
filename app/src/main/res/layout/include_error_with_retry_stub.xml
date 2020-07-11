@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_round_corners_4dp"
+    android:elevation="@dimen/global_small_elevation"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/global_medium_margin"
+        android:layout_marginTop="@dimen/global_medium_margin"
+        android:layout_marginBottom="@dimen/global_small_margin"
+        android:gravity="start"
+        android:text="@string/cannot_load_news"
+        android:textAppearance="@style/TextAppearance18M"
+        android:textColor="@color/text_color_black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/global_medium_margin"
+        android:layout_marginBottom="@dimen/global_medium_margin"
+        android:gravity="start"
+        android:text="@string/check_internet_connection"
+        android:textAppearance="@style/TextAppearance14M"
+        android:textColor="@color/text_color_gray_light" />
+
+    <TextView
+        android:id="@+id/include_error_with_retry_stub_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/global_small_margin"
+        android:layout_marginBottom="@dimen/global_small_margin"
+        android:background="@drawable/bg_ripple_gray_round_corners_4dp"
+        android:padding="8dp"
+        android:text="@string/retry"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance14M"
+        android:textColor="@color/colorPrimary" />
+
+</LinearLayout>

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">The Guardian News</string>
     <string name="search">Поиск</string>
+    <string name="retry">Повторить</string>
+    <string name="search_stub">Начните вводить текст, чтобы начать поиск</string>
+    <string name="not_found">По вашему запросу ничего не найдено</string>
+    <string name="cannot_load_news">Не удалось загрузить новости</string>
+    <string name="check_internet_connection">Проверьте подключение к сети Интернет</string>
 </resources>

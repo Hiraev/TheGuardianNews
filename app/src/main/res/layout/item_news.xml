@@ -10,7 +10,7 @@
     android:layout_marginEnd="@dimen/global_medium_margin"
     android:background="@drawable/bg_ripple_gray_round_corners_4dp"
     android:clickable="true"
-    android:elevation="4dp"
+    android:elevation="@dimen/global_elevation"
     android:focusable="true">
 
     <TextView

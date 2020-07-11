@@ -7,6 +7,9 @@
     <color name="gray_light_light">#F1F1F1</color>
     <color name="gray_light">#AFAFAF</color>
 
+    <color name="yellow">#ffe500</color>
+    <color name="red">#c70000</color>
+
     <color name="ripple_gray">#E1E1E1</color>
 
     <color name="text_color_black">#1E1E1E</color>
