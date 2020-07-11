@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="global_medium_margin">16dp</dimen>
+    <dimen name="global_small_margin">8dp</dimen>
+    <dimen name="global_small_corner_radius">4dp</dimen>
+
+    <dimen name="item_news_corner_radius">@dimen/global_small_corner_radius</dimen>
+
+</resources>

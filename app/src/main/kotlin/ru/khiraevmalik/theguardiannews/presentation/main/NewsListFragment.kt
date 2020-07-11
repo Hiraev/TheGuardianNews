@@ -6,6 +6,7 @@ import android.transition.Transition
 import android.transition.TransitionManager
 import android.transition.Visibility
 import android.view.View
+import kotlinx.android.synthetic.main.fragment_main.fragment_main_recyclerview
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_status_bar
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_back_title_button
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_clear_edit_text_button
@@ -38,6 +39,8 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         showSoftKeyboard(include_search_toolbar_edit_text)
     }
 
+    private val adapter = NewsAdapter()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setWindowInsetsListener(view)
         include_search_toolbar_search_button.rippleClick {
@@ -52,6 +55,8 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         include_search_toolbar_edit_text.setOnFocusChangeListener { editTextView, hasFocus ->
             if (!hasFocus) hideSoftKeyboard(editTextView)
         }
+        fragment_main_recyclerview.setHasFixedSize(true)
+        fragment_main_recyclerview.adapter = adapter
     }
 
     override fun onStop() {
