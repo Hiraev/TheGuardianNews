@@ -12,7 +12,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(navigationModule, viewModelsModule)
+            modules(navigationModule, viewModelsModule, interactors)
         }
     }
 

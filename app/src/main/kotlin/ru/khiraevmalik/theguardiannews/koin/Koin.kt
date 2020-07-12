@@ -3,6 +3,7 @@ package ru.khiraevmalik.theguardiannews.koin
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.khiraevmalik.theguardiannews.presentation.RootActivityViewModel
+import ru.khiraevmalik.theguardiannews.presentation.main.MainNewsViewModel
 import ru.khiraevmalik.theguardiannews.routing.RootRouter
 import ru.terrakok.cicerone.Cicerone
 
@@ -14,4 +15,5 @@ val navigationModule = module {
 
 val viewModelsModule = module {
     viewModel { RootActivityViewModel(get(), get()) }
+    viewModel { MainNewsViewModel(get()) }
 }

@@ -10,7 +10,7 @@ class KoinModulesTest {
     @Test
     fun `check Koin modules test`() {
         checkModules {
-            modules(navigationModule, viewModelsModule)
+            modules(navigationModule, viewModelsModule, interactors)
         }
     }
 
