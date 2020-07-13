@@ -10,7 +10,7 @@ import ru.khiraevmalik.theguardiannews.ContentResult
 import ru.khiraevmalik.theguardiannews.main.NewsInteractor
 import ru.khiraevmalik.theguardiannews.mappers.NewsMapper
 import ru.khiraevmalik.theguardiannews.mappers.map
-import ru.khiraevmalik.theguardiannews.presentation.mvi_base.DisposableMiddleware
+import ru.khiraevmalik.theguardiannews.mvi_base.DisposableMiddleware
 
 class SearchMiddleware(
         private val newsInteractor: NewsInteractor

@@ -1,6 +1,6 @@
 package ru.khiraevmalik.theguardiannews.presentation.main
 
-import ru.khiraevmalik.theguardiannews.presentation.mvi_base.CoroutinesMviViewModel
+import ru.khiraevmalik.theguardiannews.mvi_base.CoroutinesMviViewModel
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.Action
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MainStore
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.State

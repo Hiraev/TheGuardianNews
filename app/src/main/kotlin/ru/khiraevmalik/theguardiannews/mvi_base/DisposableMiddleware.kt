@@ -1,4 +1,4 @@
-package ru.khiraevmalik.theguardiannews.presentation.mvi_base
+package ru.khiraevmalik.theguardiannews.mvi_base
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

@@ -1,4 +1,4 @@
-package ru.khiraevmalik.theguardiannews.presentation.mvi_base
+package ru.khiraevmalik.theguardiannews.mvi_base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
