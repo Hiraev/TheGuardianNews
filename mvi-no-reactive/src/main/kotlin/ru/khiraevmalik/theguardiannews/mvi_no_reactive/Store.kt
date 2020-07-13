@@ -32,9 +32,7 @@ abstract class Store<A, U, E, S>(
 
     fun act(action: A) {
         val newState = reducer.reduce(action, state)
-        middleware.map { m ->
-            m.handle(action)
-        }
+        middleware.forEach { m -> m.handle(action) }
         state = newState
     }
 
