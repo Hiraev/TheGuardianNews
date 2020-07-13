@@ -1,7 +1,8 @@
-package ru.khiraevmalik.theguardiannews
+package ru.khiraevmalik.theguardiannews.presentation.mvi_base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.khiraevmalik.theguardiannews.CoroutinesViewModel
 import ru.khiraevmalik.theguardiannews.mvi_no_reactive.Store
 
 abstract class CoroutinesMviViewModel<A, U, E, S>(
