@@ -91,58 +91,31 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     private fun initStateObserver() {
         vm.stateLiveData.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
-                is State.Search.Idle -> showSearchIdle()
-                is State.Search.EmptyQuery -> showSearchEmptyQuery()
-                is State.Search.Loading -> showSearchLoading()
-                is State.Search.Error -> showSearchError()
-                is State.Search.NotFound -> showSearchNotFound()
-                is State.Search.Success -> showSearchResults(state.news)
-
-                is State.Fetch.Loading -> showStateLoading()
-                is State.Fetch.Error -> showStateErrorLoading()
-                is State.Fetch.Success -> showStateLoadedNews(state.news)
+                is State.Search.Loading,
+                is State.Search.Error,
+                is State.Search.NotFound,
+                is State.Search.Idle -> {
+                    showOrHideSearchToolbar(true)
+                }
+                is State.Search.EmptyQuery -> {
+                    showOrHideSearchToolbar(true)
+                    include_search_toolbar_edit_text.text?.clear()
+                }
+                is State.Search.Success -> {
+                    showOrHideSearchToolbar(true)
+                    adapter.submitList(state.news)
+                }
+                is State.Fetch.Loading,
+                is State.Fetch.Error -> {
+                    showOrHideSearchToolbar(false)
+                }
+                is State.Fetch.Success -> {
+                    adapter.submitList(state.news)
+                    showOrHideSearchToolbar(false)
+                }
             }
             updateState(state)
         })
-    }
-
-    private fun showSearchNotFound() {
-        showOrHideSearchToolbar(true)
-    }
-
-    private fun showStateLoading() {
-        showOrHideSearchToolbar(false)
-    }
-
-    private fun showSearchLoading() {
-        showOrHideSearchToolbar(true)
-    }
-
-    private fun showSearchError() {
-        showOrHideSearchToolbar(true)
-    }
-
-    private fun showSearchResults(result: List<NewsItem>) {
-        showOrHideSearchToolbar(true)
-        adapter.submitList(result)
-    }
-
-    private fun showStateErrorLoading() {
-        showOrHideSearchToolbar(false)
-    }
-
-    private fun showSearchEmptyQuery() {
-        showOrHideSearchToolbar(true)
-        include_search_toolbar_edit_text.text?.clear()
-    }
-
-    private fun showSearchIdle() {
-        showOrHideSearchToolbar(true)
-    }
-
-    private fun showStateLoadedNews(news: List<NewsItem>) {
-        adapter.submitList(news)
-        showOrHideSearchToolbar(false)
     }
 
     private fun setWindowInsetsListener(view: View) {
