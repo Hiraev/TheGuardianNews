@@ -9,4 +9,6 @@ interface NewsInteractor {
 
     suspend fun search(query: String): Result<List<News>>
 
+    fun cancelSearch()
+
 }
