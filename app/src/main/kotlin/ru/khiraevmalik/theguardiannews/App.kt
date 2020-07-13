@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import ru.khiraevmalik.theguardiannews.koin.navigationModule
+import ru.khiraevmalik.theguardiannews.koin.newsMvi
 import ru.khiraevmalik.theguardiannews.koin.viewModelsModule
 
 class App : Application() {
@@ -12,7 +13,8 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(navigationModule, viewModelsModule, interactors)
+            /** Don't forget to add all modules into test: [ru.khiraevmalik.theguardiannews.KoinModulesTest] **/
+            modules(navigationModule, viewModelsModule, interactors, newsMvi)
         }
     }
 

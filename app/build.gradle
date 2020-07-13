@@ -110,6 +110,7 @@ dependencies {
     implementation project(':domain-model')
     implementation project(':interactors-api')
     implementation project(':di-container')
+    implementation project(':mvi-no-reactive')
 
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
@@ -130,6 +131,7 @@ dependencies {
 
     testImplementation "org.koin:koin-test:$koin_version"
     testImplementation "junit:junit:$junit_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_espresso_version"
 }

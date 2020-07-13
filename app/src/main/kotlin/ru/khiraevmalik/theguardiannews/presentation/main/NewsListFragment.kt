@@ -57,7 +57,6 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         setWindowInsetsListener(view)
         initViews()
         initStateObserver()
-        vm.act(Action.User.FetchNews)
     }
 
     override fun onStop() {
@@ -89,7 +88,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun initStateObserver() {
-        vm.stateLiveData.observe(viewLifecycleOwner, Observer { state ->
+        vm.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is State.Search.Loading,
                 is State.Search.Error,

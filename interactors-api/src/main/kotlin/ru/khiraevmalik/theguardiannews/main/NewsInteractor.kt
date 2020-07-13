@@ -1,14 +1,12 @@
 package ru.khiraevmalik.theguardiannews.main
 
-import ru.khiraevmalik.theguardiannews.Result
+import ru.khiraevmalik.theguardiannews.ContentResult
 import ru.khiraevmalik.theguardiannews.news.News
 
 interface NewsInteractor {
 
-    suspend fun loadNews(): Result<List<News>>
+    suspend fun loadNews(): ContentResult<List<News>>
 
-    suspend fun search(query: String): Result<List<News>>
-
-    fun cancelSearch()
+    suspend fun search(query: String): ContentResult<List<News>>
 
 }

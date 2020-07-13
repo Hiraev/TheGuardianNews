@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion android_compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion android_min_sdk_version
+        targetSdkVersion android_target_sdk_version
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/kotlin']
+        }
+        test {
+            java.srcDirs = ['src/test/kotlin']
+        }
+        androidTest {
+            java.srcDirs = ['src/androidTest/kotlin']
+        }
+    }
+}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
