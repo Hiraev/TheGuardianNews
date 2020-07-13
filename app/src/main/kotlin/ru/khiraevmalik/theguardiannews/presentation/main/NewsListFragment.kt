@@ -114,7 +114,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                     showOrHideSearchToolbar(false)
                 }
             }
-            updateState(state)
+            updateViewsVisibility(state)
         })
     }
 
@@ -133,7 +133,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TOOLBAR_SEARCH_TRANSITION_DELAY)
     }
 
-    private fun updateState(state: State) {
+    private fun updateViewsVisibility(state: State) {
         fragment_main_progress_bar.visible(state is State.Fetch.Loading || state is State.Search.Loading)
         fragment_main_error_with_retry_stub.visible(state is State.Search.NotFound)
         fragment_main_not_found_stub.visible(state is State.Search.NotFound)
