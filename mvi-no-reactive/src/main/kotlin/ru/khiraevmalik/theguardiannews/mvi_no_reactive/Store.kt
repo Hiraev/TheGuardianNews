@@ -18,13 +18,17 @@ abstract class Store<A, U, E, S>(
         }
     }
 
+    private var onStateChangeListener: (S) -> Unit = {}
+
     private var state: S = initialState
         set(value) {
             field = value
-            onStateUpdate(value)
+            onStateChangeListener.invoke(value)
         }
 
-    abstract fun onStateUpdate(state: S)
+    fun setOnStateChangeListener(onStateChangeListener: (S) -> Unit) {
+        this.onStateChangeListener = onStateChangeListener
+    }
 
     fun act(action: A) {
         val newState = reducer.reduce(action, state)
@@ -35,6 +39,7 @@ abstract class Store<A, U, E, S>(
     }
 
     fun dispose() {
+        onStateChangeListener = {}
         middleware.forEach(Middleware<A, E>::dispose)
     }
 

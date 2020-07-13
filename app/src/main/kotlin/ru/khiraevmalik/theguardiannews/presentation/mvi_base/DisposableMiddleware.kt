@@ -15,7 +15,7 @@ abstract class DisposableMiddleware<A, E>(
 
     private val scope = CoroutineScope(job + dispatcher)
 
-    override fun dispose() {
+    override fun onDispose() {
         scope.cancel()
     }
 

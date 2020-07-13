@@ -9,16 +9,4 @@ class MainStore(
         middleware: List<Middleware<Action, Action.Effect>>
 ) : Store<Action, Action.User, Action.Effect, State>(
         reducer, middleware, initialState = State.Fetch.Loading
-) {
-
-    private var listener: (State) -> Unit = {}
-
-    fun setOnStateUpdateListener(listener: (State) -> Unit) {
-        this.listener = listener
-    }
-
-    override fun onStateUpdate(state: State) {
-        listener.invoke(state)
-    }
-
-}
+)
