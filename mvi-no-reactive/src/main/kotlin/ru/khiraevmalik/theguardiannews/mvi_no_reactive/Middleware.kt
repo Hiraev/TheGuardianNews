@@ -1,7 +1,13 @@
 package ru.khiraevmalik.theguardiannews.mvi_no_reactive
 
 /**
- * Handle action and produces effects
+ * Class handles action (A) and produces effects (E)
+ * Effects are also action, so Reduces can reduce it too.
+ *
+ * Can be used to make some Network call.
+ * effect() function may be call at any time, when result will be ready
+ *
+ * To understand A, E @see [ru.khiraevmalik.theguardiannews.mvi_no_reactive.Store]
  */
 abstract class Middleware<A, E> where E : A {
 

@@ -1,10 +1,27 @@
 package ru.khiraevmalik.theguardiannews.mvi_no_reactive
 
 /**
+ * This class presents the MVI pattern.
+ * You have to call act function to send action,
+ * and set onStateChangeListener to get state
+ * changes.
+ *
  * A - action
  * U - user action
  * E - effect action
  * S - state
+ *
+ * Example:
+ *
+ * sealed class A {
+ *      sealed class U: A() {
+ *          object Click: U()
+ *      }
+ *      sealed class E: A() {
+ *          object ResponseError: E()
+ *          class ResponseSuccess(val response: Boolean): E()
+ *      }
+ * }
  */
 abstract class Store<A, U, E, S>(
         private val reducer: Reducer<S, A>,
