@@ -16,11 +16,9 @@ sealed class Action {
 
     // Effects
     sealed class Effect : Action() {
-        object Nope : Effect()
-
         object SearchLoading : Effect()
         object SearchError : Effect()
-        object SearchEmpty: Effect()
+        object SearchEmpty : Effect()
         class SearchSuccess(val news: List<NewsItem>) : Effect()
 
         object FetchLoading : Effect()
