@@ -88,7 +88,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
             if (!hasFocus) hideSoftKeyboard(editTextView)
         }
         include_error_with_retry_stub_button.rippleClick {
-            vm.proceed(Action.User.FetchNews)
+            vm.proceed(Action.User.Retry)
         }
         include_search_toolbar_edit_text.addOnTextChangedListener { value ->
             vm.proceed(Action.User.SearchQuery(value.trim()))

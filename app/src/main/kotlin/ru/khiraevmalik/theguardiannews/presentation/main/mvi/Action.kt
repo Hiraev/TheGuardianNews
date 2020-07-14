@@ -13,14 +13,16 @@ sealed class Action {
 
         object FetchNews : User()
         object FetchMore : User()
+
+        object Retry : User()
     }
 
     // Effects
     sealed class Effect : Action() {
         object SearchLoading : Effect()
-        object SearchError : Effect()
+        class SearchError(val lastQuery: String) : Effect()
         object SearchEmpty : Effect()
-        object SearchClose: Effect()
+        object SearchClose : Effect()
         class SearchSuccess(val news: List<NewsItem>) : Effect()
 
         object FetchLoading : Effect()

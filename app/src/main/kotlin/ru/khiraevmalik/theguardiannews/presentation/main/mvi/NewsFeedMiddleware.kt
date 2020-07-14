@@ -24,9 +24,10 @@ class NewsFeedMiddleware(
 
     override fun handle(action: Action, state: State) {
         when (action) {
+            is Action.User.Retry -> if (state is State.Fetch.Error) fetchNews()
             is Action.User.FetchNews -> fetchNews()
             // Extract old data from state and load more
-            is Action.User.FetchMore -> (state as? State.Fetch.Success)?.news?.let(::fetchMoreNews)
+            is Action.User.FetchMore -> if (state is State.Fetch.Success) fetchMoreNews(state.news)
         }
     }
 

@@ -40,6 +40,9 @@ class SearchMiddleware(
 
     override fun handle(action: Action, state: State) {
         when (action) {
+            is Action.User.Retry -> {
+                if (state is State.Search.Error) search(state.lastQuery)
+            }
             is Action.User.SearchQuery -> {
                 searchQuery.offer(action.query)
             }
@@ -54,16 +57,18 @@ class SearchMiddleware(
         }
     }
 
-    private suspend fun search(query: String) {
+    private fun search(query: String) {
         if (query.isEmpty()) {
             effectOnMain(Action.Effect.SearchEmpty)
             return
         }
         effectOnMain(Action.Effect.SearchLoading)
-        val result = newsInteractor.search(query)
-        when (val mapped = result.map(null, NewsMapper::mapToNewsItems)) {
-            is ContentResult.Success -> effectOnMain(Action.Effect.SearchSuccess(mapped.data))
-            is ContentResult.Error -> effectOnMain(Action.Effect.SearchError)
+        launch {
+            val result = newsInteractor.search(query)
+            when (val mapped = result.map(null, NewsMapper::mapToNewsItems)) {
+                is ContentResult.Success -> effectOnMain(Action.Effect.SearchSuccess(mapped.data))
+                is ContentResult.Error -> effectOnMain(Action.Effect.SearchError(query))
+            }
         }
     }
 

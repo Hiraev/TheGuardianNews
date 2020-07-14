@@ -16,7 +16,7 @@ sealed class State {
         object Idle : Search()
         object NotFound : Search()
         object Loading : Search()
-        object Error : Search()
+        class Error(val lastQuery: String) : Search()
         class Success(val news: List<NewsItem>) : Search()
     }
 
