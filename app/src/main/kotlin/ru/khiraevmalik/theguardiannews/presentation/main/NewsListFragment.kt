@@ -120,14 +120,13 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                 is State.Fetch.Success -> {
                     adapter.submitList(state.news)
                     showOrHideSearchToolbar(false)
-                    scrollListener.enable()
                 }
                 is State.Fetch.FullData -> {
                     adapter.submitList(state.news)
                     showOrHideSearchToolbar(false)
-                    scrollListener.disable()
                 }
             }
+            if (state is State.Fetch.Success) scrollListener.enable() else scrollListener.disable()
             updateViewsVisibility(state)
         })
         vm.events.observe(viewLifecycleOwner, Observer { event ->
