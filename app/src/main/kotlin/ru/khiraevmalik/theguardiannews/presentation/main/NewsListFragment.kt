@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_main.fragment_main_not_found_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_progress_bar
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_recyclerview
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_hint_stub
+import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_recyclerview
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_status_bar
 import kotlinx.android.synthetic.main.include_error_with_retry_stub.include_error_with_retry_stub_button
 import kotlinx.android.synthetic.main.include_no_data_with_retry_stub.include_no_data_with_retry_stub_button
@@ -55,6 +56,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private val adapter = NewsAdapter()
+    private val searchAdapter = NewsAdapter()
     private val scrollListener = LinearLayoutManagerRecyclerViewOnScrollListener(PREFETCH_DISTANCE) {
         vm.proceed(Action.User.FetchMore)
     }
@@ -97,6 +99,8 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         fragment_main_recyclerview.setHasFixedSize(true)
         fragment_main_recyclerview.adapter = adapter
         fragment_main_recyclerview.addOnScrollListener(scrollListener)
+        fragment_main_search_recyclerview.setHasFixedSize(true)
+        fragment_main_search_recyclerview.adapter = searchAdapter
     }
 
     private fun initStateObserver() {
@@ -110,7 +114,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                 }
                 is State.Search.Success -> {
                     showOrHideSearchToolbar(true)
-                    adapter.submitList(state.news)
+                    searchAdapter.submitList(state.news)
                 }
                 is State.Fetch.EmptyData,
                 is State.Fetch.Loading,
@@ -155,8 +159,9 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         fragment_main_progress_bar.visible(state is State.Fetch.Loading || state is State.Search.Loading)
         fragment_main_not_found_stub.visible(state is State.Search.NotFound)
         fragment_main_no_data_with_retry_stub.visible(state is State.Fetch.EmptyData)
-        fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error)
-        fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Search.Success || state is State.Fetch.FullData)
+        fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error || state is State.Search.Error)
+        fragment_main_search_recyclerview.visible(state is State.Search.Success)
+        fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Fetch.FullData)
         fragment_main_search_hint_stub.visible(state is State.Search.Idle)
     }
 
