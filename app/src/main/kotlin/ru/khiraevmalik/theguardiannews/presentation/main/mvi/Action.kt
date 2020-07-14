@@ -20,6 +20,7 @@ sealed class Action {
         object SearchLoading : Effect()
         object SearchError : Effect()
         object SearchEmpty : Effect()
+        object SearchClose: Effect()
         class SearchSuccess(val news: List<NewsItem>) : Effect()
 
         object FetchLoading : Effect()

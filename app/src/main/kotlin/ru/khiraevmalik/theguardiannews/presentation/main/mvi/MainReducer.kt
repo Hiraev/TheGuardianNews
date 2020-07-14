@@ -17,6 +17,7 @@ class MainReducer : Reducer<State, Action> {
                 is Action.User.SearchClose,
                 is Action.User.SearchClear,
                 is Action.Effect.SearchEmpty,
+                is Action.Effect.SearchClose,
                 is Action.Effect.SearchLoading,
                 is Action.Effect.SearchError,
                 is Action.Effect.SearchSuccess -> internalReduce(action, state)
@@ -34,6 +35,7 @@ class MainReducer : Reducer<State, Action> {
     }
 
     private fun internalReduce(action: Action, state: State): State = when (action) {
+        is Action.Effect.SearchClose,
         is Action.User.SearchClose -> lastFetchState
         is Action.User.SearchClear,
         is Action.Effect.SearchEmpty -> State.Search.Idle
