@@ -14,7 +14,7 @@ import ru.khiraevmalik.theguardiannews.mvi_base.DisposableMiddleware
 
 class SearchMiddleware(
         private val newsInteractor: NewsInteractor
-) : DisposableMiddleware<Action, Action.Effect, MainNews>() {
+) : DisposableMiddleware<Action, Action.Effect, State, MainNews>() {
 
     private var searchJob: Job? = null
 
@@ -38,7 +38,7 @@ class SearchMiddleware(
         }
     }
 
-    override fun handle(action: Action) {
+    override fun handle(action: Action, state: State) {
         when (action) {
             is Action.User.SearchQuery -> {
                 searchQuery.offer(action.query)

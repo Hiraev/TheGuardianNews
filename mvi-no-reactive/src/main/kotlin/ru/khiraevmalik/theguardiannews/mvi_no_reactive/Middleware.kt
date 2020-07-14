@@ -12,12 +12,12 @@ import android.os.Looper
  *
  * To understand A, E, N @see [ru.khiraevmalik.theguardiannews.mvi_no_reactive.Store]
  */
-abstract class Middleware<A, E, N> where E : A {
+abstract class Middleware<A, E, S, N> where E : A {
 
     private var effectListener: (E) -> Unit = {}
     private var newsListener: (N) -> Unit = {}
 
-    abstract fun handle(action: A)
+    abstract fun handle(action: A, state: S)
     open fun onDispose() {}
 
     /**

@@ -8,9 +8,9 @@ import ru.khiraevmalik.theguardiannews.mvi_base.DisposableMiddleware
 
 class NewsFeedMiddleware(
         private val newsInteractor: NewsInteractor
-) : DisposableMiddleware<Action, Action.Effect, MainNews>() {
+) : DisposableMiddleware<Action, Action.Effect, State, MainNews>() {
 
-    override fun handle(action: Action) {
+    override fun handle(action: Action, state: State) {
         when (action) {
             is Action.User.FetchNews -> fetchNews()
         }

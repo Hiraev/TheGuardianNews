@@ -31,7 +31,7 @@ import android.os.Looper
  */
 abstract class Store<A, U, E, S, N>(
         private val reducer: Reducer<S, A>,
-        private val middleware: List<Middleware<A, E, N>>,
+        private val middleware: List<Middleware<A, E, S, N>>,
         initialState: S
 ) where U : A, E : A {
 
@@ -64,7 +64,7 @@ abstract class Store<A, U, E, S, N>(
     fun proceed(action: A) {
         if (Looper.myLooper() != Looper.getMainLooper()) throw IllegalStateException("proceed function must be called on main thread")
         val newState = reducer.reduce(action, state)
-        middleware.forEach { m -> m.handle(action) }
+        middleware.forEach { m -> m.handle(action, state) }
         onAct(action, state, newState)
         state = newState
     }
@@ -72,7 +72,7 @@ abstract class Store<A, U, E, S, N>(
     fun dispose() {
         onStateChangeListener = {}
         onNewsListener = {}
-        middleware.forEach(Middleware<A, E, N>::dispose)
+        middleware.forEach(Middleware<A, E, S, N>::dispose)
     }
 
     open fun onAct(action: A, oldState: S, newState: S) {}

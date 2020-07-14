@@ -8,7 +8,7 @@ import ru.khiraevmalik.theguardiannews.mvi_no_reactive.Store
 
 class MainStore(
         reducer: Reducer<State, Action>,
-        middleware: List<Middleware<Action, Action.Effect, MainNews>>
+        middleware: List<Middleware<Action, Action.Effect, State, MainNews>>
 ) : Store<Action, Action.User, Action.Effect, State, MainNews>(
         reducer, middleware, initialState = State.Fetch.Loading
 ) {
