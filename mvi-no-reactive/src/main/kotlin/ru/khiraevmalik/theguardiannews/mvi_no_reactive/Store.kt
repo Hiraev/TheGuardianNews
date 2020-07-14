@@ -59,7 +59,7 @@ abstract class Store<A, U, E, S, N>(
         this.onNewsListener = onEventListener
     }
 
-    fun act(action: A) {
+    fun proceed(action: A) {
         val newState = reducer.reduce(action, state)
         middleware.forEach { m -> m.handle(action) }
         onAct(action, state, newState)
@@ -75,7 +75,7 @@ abstract class Store<A, U, E, S, N>(
     open fun onAct(action: A, oldState: S, newState: S) {}
 
     private fun onEffect(effect: E) {
-        act(effect)
+        proceed(effect)
     }
 
     private fun onEvent(event: N) {

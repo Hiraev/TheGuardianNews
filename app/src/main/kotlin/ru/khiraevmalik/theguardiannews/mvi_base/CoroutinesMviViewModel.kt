@@ -30,8 +30,8 @@ abstract class CoroutinesMviViewModel<A, U, E, S, Ev>(
         store.dispose()
     }
 
-    fun act(action: A) {
-        store.act(action)
+    fun proceed(action: A) {
+        store.proceed(action)
     }
 
 }

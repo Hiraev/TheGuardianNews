@@ -67,22 +67,22 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun initViews() {
         include_search_toolbar_search_button.rippleClick {
-            vm.act(Action.User.SearchOpen)
+            vm.proceed(Action.User.SearchOpen)
         }
         include_search_toolbar_back_title_button.rippleClick {
-            vm.act(Action.User.SearchClose)
+            vm.proceed(Action.User.SearchClose)
         }
         include_search_toolbar_clear_edit_text_button.rippleClick {
-            vm.act(Action.User.SearchClear)
+            vm.proceed(Action.User.SearchClear)
         }
         include_search_toolbar_edit_text.setOnFocusChangeListener { editTextView, hasFocus ->
             if (!hasFocus) hideSoftKeyboard(editTextView)
         }
         include_error_with_retry_stub_button.rippleClick {
-            vm.act(Action.User.FetchNews)
+            vm.proceed(Action.User.FetchNews)
         }
         include_search_toolbar_edit_text.addOnTextChangedListener { value ->
-            vm.act(Action.User.SearchQuery(value.trim()))
+            vm.proceed(Action.User.SearchQuery(value.trim()))
         }
         fragment_main_recyclerview.setHasFixedSize(true)
         fragment_main_recyclerview.adapter = adapter

@@ -11,7 +11,7 @@ class MainNewsViewModel(
 ) : CoroutinesMviViewModel<Action, Action.User, Action.Effect, State, MviNews>(store) {
 
     init {
-        act(Action.User.FetchNews)
+        proceed(Action.User.FetchNews)
     }
 
 }
