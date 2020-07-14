@@ -8,10 +8,10 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import ru.khiraevmalik.theguardiannews.mvi_no_reactive.Middleware
 
-abstract class DisposableMiddleware<A, E>(
+abstract class DisposableMiddleware<A, E, N>(
         job: Job = Job(),
         dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : Middleware<A, E>() where E : A {
+) : Middleware<A, E, N>() where E : A {
 
     private val scope = CoroutineScope(job + dispatcher)
 

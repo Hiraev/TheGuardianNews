@@ -6,10 +6,14 @@ package ru.khiraevmalik.theguardiannews.mvi_no_reactive
  * and set onStateChangeListener to get state
  * changes.
  *
+ * Use news (N) to get events that won't be saved
+ * They have been consumed only one time, or be skipped
+ *
  * A - action
  * U - user action
  * E - effect action
  * S - state
+ * N - news
  *
  * Example:
  *
@@ -23,9 +27,9 @@ package ru.khiraevmalik.theguardiannews.mvi_no_reactive
  *      }
  * }
  */
-abstract class Store<A, U, E, S>(
+abstract class Store<A, U, E, S, N>(
         private val reducer: Reducer<S, A>,
-        private val middleware: List<Middleware<A, E>>,
+        private val middleware: List<Middleware<A, E, N>>,
         initialState: S
 ) where U : A, E : A {
 
@@ -33,9 +37,13 @@ abstract class Store<A, U, E, S>(
         middleware.forEach {
             it.setEffectListener(::onEffect)
         }
+        middleware.forEach {
+            it.setNewsListener(::onEvent)
+        }
     }
 
     private var onStateChangeListener: (S) -> Unit = {}
+    private var onNewsListener: (N) -> Unit = {}
 
     private var state: S = initialState
         set(value) {
@@ -47,19 +55,31 @@ abstract class Store<A, U, E, S>(
         this.onStateChangeListener = onStateChangeListener
     }
 
+    fun setEventsListener(onEventListener: (N) -> Unit) {
+        this.onNewsListener = onEventListener
+    }
+
     fun act(action: A) {
         val newState = reducer.reduce(action, state)
         middleware.forEach { m -> m.handle(action) }
+        onAct(action, state, newState)
         state = newState
     }
 
     fun dispose() {
         onStateChangeListener = {}
-        middleware.forEach(Middleware<A, E>::dispose)
+        onNewsListener = {}
+        middleware.forEach(Middleware<A, E, N>::dispose)
     }
+
+    open fun onAct(action: A, oldState: S, newState: S) {}
 
     private fun onEffect(effect: E) {
         act(effect)
+    }
+
+    private fun onEvent(event: N) {
+        onNewsListener.invoke(event)
     }
 
 }

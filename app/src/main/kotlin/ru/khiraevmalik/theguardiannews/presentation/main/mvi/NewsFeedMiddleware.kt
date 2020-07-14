@@ -8,7 +8,7 @@ import ru.khiraevmalik.theguardiannews.mvi_base.DisposableMiddleware
 
 class NewsFeedMiddleware(
         private val newsInteractor: NewsInteractor
-) : DisposableMiddleware<Action, Action.Effect>() {
+) : DisposableMiddleware<Action, Action.Effect, MviNews>() {
 
     override fun handle(action: Action) {
         when (action) {

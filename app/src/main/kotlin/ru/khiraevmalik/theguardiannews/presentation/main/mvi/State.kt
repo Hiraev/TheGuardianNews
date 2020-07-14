@@ -12,7 +12,6 @@ sealed class State {
 
     sealed class Search : State() {
         object Idle : Search()
-        object EmptyQuery : Search()
         object NotFound : Search()
         object Loading : Search()
         object Error : Search()

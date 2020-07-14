@@ -14,7 +14,7 @@ import ru.khiraevmalik.theguardiannews.mvi_base.DisposableMiddleware
 
 class SearchMiddleware(
         private val newsInteractor: NewsInteractor
-) : DisposableMiddleware<Action, Action.Effect>() {
+) : DisposableMiddleware<Action, Action.Effect, MviNews>() {
 
     private var searchJob: Job? = null
 
@@ -43,7 +43,10 @@ class SearchMiddleware(
             is Action.User.SearchQuery -> {
                 searchQuery.offer(action.query)
             }
-            is Action.User.SearchClear,
+            is Action.User.SearchClear -> {
+                event(MviNews.Search.ClearSearchEditText)
+                searchJob?.cancel()
+            }
             is Action.User.SearchClose -> {
                 searchJob?.cancel()
             }
