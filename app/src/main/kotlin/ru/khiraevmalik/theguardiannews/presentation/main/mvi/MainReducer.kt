@@ -38,11 +38,11 @@ class MainReducer : Reducer<State, Action> {
         is Action.Effect.SearchEmpty -> State.Search.Idle
         is Action.Effect.SearchLoading -> State.Search.Loading
         is Action.Effect.SearchError -> State.Search.Error
-        is Action.Effect.SearchSuccess -> State.Search.Success(action.news)
+        is Action.Effect.SearchSuccess -> if (action.news.isEmpty()) State.Search.NotFound else State.Search.Success(action.news)
         is Action.User.SearchOpen -> lastSearchState
         is Action.Effect.FetchError -> State.Fetch.Error
         is Action.Effect.FetchLoading -> State.Fetch.Loading
-        is Action.Effect.FetchSuccess -> State.Fetch.Success(action.news)
+        is Action.Effect.FetchSuccess -> if (action.news.isEmpty()) State.Fetch.EmptyData else State.Fetch.Success(action.news)
         else -> state
     }
 

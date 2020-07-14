@@ -8,12 +8,14 @@ import android.transition.Visibility
 import android.view.View
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_error_with_retry_stub
+import kotlinx.android.synthetic.main.fragment_main.fragment_main_no_data_with_retry_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_not_found_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_progress_bar
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_recyclerview
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_hint_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_status_bar
 import kotlinx.android.synthetic.main.include_error_with_retry_stub.include_error_with_retry_stub_button
+import kotlinx.android.synthetic.main.include_no_data_with_retry_stub.include_no_data_with_retry_stub_button
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_back_title_button
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_clear_edit_text_button
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_container
@@ -84,6 +86,9 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         include_search_toolbar_edit_text.addOnTextChangedListener { value ->
             vm.proceed(Action.User.SearchQuery(value.trim()))
         }
+        include_no_data_with_retry_stub_button.rippleClick {
+            vm.proceed(Action.User.FetchNews)
+        }
         fragment_main_recyclerview.setHasFixedSize(true)
         fragment_main_recyclerview.adapter = adapter
     }
@@ -101,6 +106,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                     showOrHideSearchToolbar(true)
                     adapter.submitList(state.news)
                 }
+                is State.Fetch.EmptyData,
                 is State.Fetch.Loading,
                 is State.Fetch.Error -> {
                     showOrHideSearchToolbar(false)
@@ -136,11 +142,11 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun updateViewsVisibility(state: State) {
         fragment_main_progress_bar.visible(state is State.Fetch.Loading || state is State.Search.Loading)
-        fragment_main_error_with_retry_stub.visible(state is State.Search.NotFound)
         fragment_main_not_found_stub.visible(state is State.Search.NotFound)
+        fragment_main_no_data_with_retry_stub.visible(state is State.Fetch.EmptyData)
         fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error)
         fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Search.Success)
-        fragment_main_search_hint_stub.visible(state is State.Search.NotFound || state is State.Search.Idle)
+        fragment_main_search_hint_stub.visible(state is State.Search.Idle)
     }
 
 }

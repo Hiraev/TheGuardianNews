@@ -5,5 +5,7 @@
     <string name="search_stub">Начните вводить текст, чтобы начать поиск</string>
     <string name="not_found">По вашему запросу ничего не найдено</string>
     <string name="cannot_load_news">Не удалось загрузить новости</string>
+    <string name="empty_news_title">Новостей нет</string>
+    <string name="empty_news_subtitle">Новостей пока нет, попробуйте позже.</string>
     <string name="check_internet_connection">Проверьте подключение к сети Интернет</string>
 </resources>
