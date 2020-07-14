@@ -1,5 +1,7 @@
 package ru.khiraevmalik.theguardiannews.mvi_no_reactive
 
+import android.os.Looper
+
 /**
  * Class handles action (A) and produces effects (E) and news (N)
  * Effects are also action, so Reduces can reduce it too.
@@ -18,12 +20,21 @@ abstract class Middleware<A, E, N> where E : A {
     abstract fun handle(action: A)
     open fun onDispose() {}
 
-    fun effect(e: E) {
-        effectListener.invoke(e)
+    /**
+     * Effect function must be called on main thread
+     * @see [ru.khiraevmalik.theguardiannews.mvi_no_reactive.Store.proceed]
+     */
+    fun effect(effect: E) {
+        effectListener.invoke(effect)
     }
 
-    fun event(e: N) {
-        newsListener.invoke(e)
+    /**
+     * News function must be called on main thread
+     * @see [ru.khiraevmalik.theguardiannews.mvi_no_reactive.Store.onEvent]
+     */
+    fun news(news: N) {
+        if (Looper.myLooper() != Looper.getMainLooper()) throw IllegalStateException("news function must be called on main thread")
+        newsListener.invoke(news)
     }
 
     internal fun dispose() {

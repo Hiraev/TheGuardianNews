@@ -1,5 +1,7 @@
 package ru.khiraevmalik.theguardiannews.mvi_no_reactive
 
+import android.os.Looper
+
 /**
  * This class presents the MVI pattern.
  * You have to call act function to send action,
@@ -60,6 +62,7 @@ abstract class Store<A, U, E, S, N>(
     }
 
     fun proceed(action: A) {
+        if (Looper.myLooper() != Looper.getMainLooper()) throw IllegalStateException("proceed function must be called on main thread")
         val newState = reducer.reduce(action, state)
         middleware.forEach { m -> m.handle(action) }
         onAct(action, state, newState)

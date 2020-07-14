@@ -44,7 +44,7 @@ class SearchMiddleware(
                 searchQuery.offer(action.query)
             }
             is Action.User.SearchClear -> {
-                event(MviNews.Search.ClearSearchEditText)
+                news(MviNews.Search.ClearSearchEditText)
                 searchJob?.cancel()
             }
             is Action.User.SearchClose -> {
@@ -55,14 +55,14 @@ class SearchMiddleware(
 
     private suspend fun search(query: String) {
         if (query.isEmpty()) {
-            effect(Action.Effect.SearchEmpty)
+            effectOnMain(Action.Effect.SearchEmpty)
             return
         }
-        effect(Action.Effect.SearchLoading)
+        effectOnMain(Action.Effect.SearchLoading)
         val result = newsInteractor.search(query)
         when (val mapped = result.map(null, NewsMapper::mapToNewsItems)) {
-            is ContentResult.Success -> effect(Action.Effect.SearchSuccess(mapped.data))
-            is ContentResult.Error -> effect(Action.Effect.SearchError)
+            is ContentResult.Success -> effectOnMain(Action.Effect.SearchSuccess(mapped.data))
+            is ContentResult.Error -> effectOnMain(Action.Effect.SearchError)
         }
     }
 

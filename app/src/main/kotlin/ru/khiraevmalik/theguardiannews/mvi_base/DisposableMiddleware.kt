@@ -19,6 +19,12 @@ abstract class DisposableMiddleware<A, E, N>(
         scope.cancel()
     }
 
+    fun effectOnMain(effect: E) {
+        scope.launch(Dispatchers.Main) {
+            effect(effect)
+        }
+    }
+
     fun launch(block: suspend CoroutineScope.() -> Unit) = scope.launch(block = block)
 
 }

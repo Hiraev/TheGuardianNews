@@ -17,12 +17,12 @@ class NewsFeedMiddleware(
     }
 
     private fun fetchNews() {
+        effectOnMain(Action.Effect.FetchLoading)
         launch {
-            effect(Action.Effect.FetchLoading)
             val result = newsInteractor.loadNews()
             when (val mapped = result.map(null, NewsMapper::mapToNewsItems)) {
-                is ContentResult.Success -> effect(Action.Effect.FetchSuccess(mapped.data))
-                is ContentResult.Error -> effect(Action.Effect.FetchError)
+                is ContentResult.Success -> effectOnMain(Action.Effect.FetchSuccess(mapped.data))
+                is ContentResult.Error -> effectOnMain(Action.Effect.FetchError)
             }
         }
     }
