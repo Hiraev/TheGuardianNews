@@ -48,7 +48,7 @@ class NewsFeedMiddleware(
             val result = newsInteractor.loadNews(pageNumber + 1, PAGE_SIZE)
             when (val mapped = result.map(null, NewsMapper::mapToNewsItems)) {
                 is ContentResult.Success -> handleSuccessfullyFetchedMoreData(old, mapped.data)
-                is ContentResult.Error -> news(MainNews.Fetch.ErrorLoadingMore)
+                is ContentResult.Error -> newsOnMain(MainNews.Fetch.ErrorLoadingMore)
             }
         }
     }

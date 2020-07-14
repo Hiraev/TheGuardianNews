@@ -25,6 +25,12 @@ abstract class DisposableMiddleware<A, E, S, N>(
         }
     }
 
+    fun newsOnMain(news: N) {
+        scope.launch(Dispatchers.Main) {
+            news(news)
+        }
+    }
+
     fun launch(block: suspend CoroutineScope.() -> Unit) = scope.launch(block = block)
 
 }
