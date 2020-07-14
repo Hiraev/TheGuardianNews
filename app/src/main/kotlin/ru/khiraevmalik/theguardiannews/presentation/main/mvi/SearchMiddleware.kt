@@ -48,6 +48,7 @@ class SearchMiddleware(
                 searchJob?.cancel()
             }
             is Action.User.SearchClose -> {
+                effectOnMain(Action.Effect.SearchEmpty)
                 searchJob?.cancel()
             }
         }
