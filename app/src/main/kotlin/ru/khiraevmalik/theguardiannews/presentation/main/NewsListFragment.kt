@@ -27,6 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.khiraevmalik.theguardiannews.R
 import ru.khiraevmalik.theguardiannews.presentation.BaseFragment
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.Action
+import ru.khiraevmalik.theguardiannews.presentation.main.mvi.LinearLayoutManagerRecyclerViewOnScrollListener
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MainNews
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.State
 import ru.khiraevmalik.theguardiannews.utils.addOnTextChangedListener
@@ -40,6 +41,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     companion object {
         private const val TOOLBAR_SEARCH_TRANSITION_DELAY = 200L
+        private const val PREFETCH_DISTANCE = 5
         fun newInstance() = NewsListFragment()
     }
 
@@ -53,6 +55,9 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private val adapter = NewsAdapter()
+    private val scrollListener = LinearLayoutManagerRecyclerViewOnScrollListener(PREFETCH_DISTANCE) {
+        vm.proceed(Action.User.FetchMore)
+    }
 
     private val vm by viewModel<MainNewsViewModel>()
 
@@ -91,6 +96,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         }
         fragment_main_recyclerview.setHasFixedSize(true)
         fragment_main_recyclerview.adapter = adapter
+        fragment_main_recyclerview.addOnScrollListener(scrollListener)
     }
 
     private fun initStateObserver() {
@@ -114,6 +120,12 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                 is State.Fetch.Success -> {
                     adapter.submitList(state.news)
                     showOrHideSearchToolbar(false)
+                    scrollListener.enable()
+                }
+                is State.Fetch.FullData -> {
+                    adapter.submitList(state.news)
+                    showOrHideSearchToolbar(false)
+                    scrollListener.disable()
                 }
             }
             updateViewsVisibility(state)
@@ -145,7 +157,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         fragment_main_not_found_stub.visible(state is State.Search.NotFound)
         fragment_main_no_data_with_retry_stub.visible(state is State.Fetch.EmptyData)
         fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error)
-        fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Search.Success)
+        fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Search.Success || state is State.Fetch.FullData)
         fragment_main_search_hint_stub.visible(state is State.Search.Idle)
     }
 

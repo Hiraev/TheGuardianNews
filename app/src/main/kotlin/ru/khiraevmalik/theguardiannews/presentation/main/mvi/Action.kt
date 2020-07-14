@@ -12,6 +12,7 @@ sealed class Action {
         class SearchQuery(val query: String) : User()
 
         object FetchNews : User()
+        object FetchMore : User()
     }
 
     // Effects
@@ -24,6 +25,7 @@ sealed class Action {
         object FetchLoading : Effect()
         object FetchError : Effect()
         class FetchSuccess(val news: List<NewsItem>) : Effect()
+        class FetchFullData(val news: List<NewsItem>) : Effect()
     }
 
 }

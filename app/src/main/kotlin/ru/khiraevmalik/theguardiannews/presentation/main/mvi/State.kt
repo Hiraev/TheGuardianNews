@@ -7,8 +7,9 @@ sealed class State {
     sealed class Fetch : State() {
         object Loading : Fetch()
         object Error : Fetch()
-        object EmptyData: Fetch()
+        object EmptyData : Fetch()
         class Success(val news: List<NewsItem>) : Fetch()
+        class FullData(val news: List<NewsItem>) : Fetch()
     }
 
     sealed class Search : State() {

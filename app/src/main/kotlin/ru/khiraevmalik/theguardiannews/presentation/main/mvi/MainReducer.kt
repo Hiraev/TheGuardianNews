@@ -26,6 +26,7 @@ class MainReducer : Reducer<State, Action> {
                 is Action.User.SearchOpen,
                 is Action.Effect.FetchError,
                 is Action.Effect.FetchLoading,
+                is Action.Effect.FetchFullData,
                 is Action.Effect.FetchSuccess -> internalReduce(action, state)
                 else -> state
             }
@@ -42,6 +43,7 @@ class MainReducer : Reducer<State, Action> {
         is Action.User.SearchOpen -> lastSearchState
         is Action.Effect.FetchError -> State.Fetch.Error
         is Action.Effect.FetchLoading -> State.Fetch.Loading
+        is Action.Effect.FetchFullData -> State.Fetch.FullData(action.news)
         is Action.Effect.FetchSuccess -> if (action.news.isEmpty()) State.Fetch.EmptyData else State.Fetch.Success(action.news)
         else -> state
     }
