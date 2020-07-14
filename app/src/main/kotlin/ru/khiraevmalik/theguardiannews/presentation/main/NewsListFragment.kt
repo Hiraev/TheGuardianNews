@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.khiraevmalik.theguardiannews.R
 import ru.khiraevmalik.theguardiannews.presentation.BaseFragment
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.Action
-import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MviNews
+import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MainNews
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.State
 import ru.khiraevmalik.theguardiannews.utils.addOnTextChangedListener
 import ru.khiraevmalik.theguardiannews.utils.addSystemTopPadding
@@ -114,7 +114,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         })
         vm.events.observe(viewLifecycleOwner, Observer { event ->
             when (event) {
-                is MviNews.Search.ClearSearchEditText -> include_search_toolbar_edit_text.text?.clear()
+                is MainNews.Search.ClearSearchEditText -> include_search_toolbar_edit_text.text?.clear()
             }
         })
     }

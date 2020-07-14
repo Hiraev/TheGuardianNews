@@ -1,7 +1,7 @@
 package ru.khiraevmalik.theguardiannews.presentation.main.mvi
 
-sealed class MviNews {
-    sealed class Search : MviNews() {
+sealed class MainNews {
+    sealed class Search : MainNews() {
         object ClearSearchEditText : Search()
     }
 }
