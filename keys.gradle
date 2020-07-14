@@ -8,4 +8,7 @@ ext {
     signing_key_password_debug = signing_key_password_release
     signing_store_file_path_debug = signing_store_file_path_release
     signing_store_password_debug = signing_store_password_release
+
+    the_guardian_api_key_debug = 'test'
+    the_guardian_api_key_release = the_guardian_api_key_debug
 }

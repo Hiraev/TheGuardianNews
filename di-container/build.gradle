@@ -28,6 +28,8 @@ android {
 }
 dependencies {
     implementation project(':interactors-api')
+    implementation project(':repositories-api')
+    implementation project(':data')
     implementation project(':domain')
     implementation project(':domain-model')
 
@@ -36,4 +38,8 @@ dependencies {
     implementation "org.koin:koin-core-ext:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "ru.terrakok.cicerone:cicerone:$cicerone_version"
+
+    testImplementation "org.koin:koin-test:$koin_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
 }

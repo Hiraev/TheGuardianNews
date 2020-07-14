@@ -19,6 +19,11 @@ ext {
     cicerone_version = '5.1.1'
 
     okhttp_version = '4.7.2'
+    retrofit_version = '2.9.0'
+    okhttp_logging_interceptor_version = '4.8.0'
+    moshi_converter_version = '2.9.0'
+    moshi_version = '1.9.3'
+    moshi_kotlin_version = '1.9.3'
     junit_version = '4.12'
     koin_version = '2.1.6'
     kotlin_coroutines_version = '1.3.7'

@@ -14,7 +14,7 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             /** Don't forget to add all modules into test: [ru.khiraevmalik.theguardiannews.KoinModulesTest] **/
-            modules(navigationModule, viewModelsModule, interactors, newsMvi)
+            modules(navigationModule, viewModelsModule, interactors, newsMvi, dataProvider)
         }
     }
 
