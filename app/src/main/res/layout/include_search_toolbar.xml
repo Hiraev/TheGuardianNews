@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/include_search_toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginVertical="11dp">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/include_search_toolbar_search_group"
