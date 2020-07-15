@@ -43,18 +43,18 @@ import ru.khiraevmalik.theguardiannews.utils.visible
 class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     companion object {
-        private const val TRANSITION_DELAY = 200L
+        private const val TRANSITION_DURATION = 200L
         private const val MIN_FIRST_VISIBLE_POSITION_TO_SHOW_SCROLL_UP_BUTTON = 15
         private const val PREFETCH_DISTANCE = 5
         fun newInstance() = NewsListFragment()
     }
 
     private val fade: Transition = Fade().apply {
-        duration = TRANSITION_DELAY
+        duration = TRANSITION_DURATION
         mode = Visibility.MODE_IN
     }
 
-    private val scrollUpButtonFade: Transition = Fade().apply { duration = TRANSITION_DELAY }
+    private val scrollUpButtonFade: Transition = Fade().apply { duration = TRANSITION_DURATION }
 
     private val showKeyboardPostDelayed = Runnable {
         showSoftKeyboard(include_search_toolbar_edit_text)
@@ -174,7 +174,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun focusSearchEditText() {
-        include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TRANSITION_DELAY)
+        include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TRANSITION_DURATION)
     }
 
     private fun onScrollUpVisibilityChanged(visible: Boolean) {
