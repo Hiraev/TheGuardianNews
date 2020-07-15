@@ -81,7 +81,7 @@
             android:inputType="text|textAutoComplete"
             android:lines="1"
             android:paddingHorizontal="8dp"
-            android:paddingVertical="5dp"
+            android:paddingVertical="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@id/include_search_toolbar_clear_edit_text_button"
             app:layout_constraintStart_toEndOf="@id/include_search_toolbar_back_title_button"
