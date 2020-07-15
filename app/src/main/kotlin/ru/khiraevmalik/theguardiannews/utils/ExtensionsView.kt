@@ -22,6 +22,8 @@ fun View.visible(visible: Boolean) {
     this.visibility = if (visible) View.VISIBLE else View.GONE
 }
 
+fun View.isVisible() = this.visibility == View.VISIBLE
+
 fun View.addSystemTopPadding(targetView: View = this) {
     doOnApplyWindowInsets { _, insets, initialPadding ->
         targetView.updatePaddings(

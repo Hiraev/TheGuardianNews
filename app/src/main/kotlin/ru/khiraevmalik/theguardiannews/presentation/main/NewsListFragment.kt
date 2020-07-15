@@ -7,11 +7,13 @@ import android.transition.TransitionManager
 import android.transition.Visibility
 import android.view.View
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.fragment_main.fragment_main_container
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_error_with_retry_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_no_data_with_retry_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_not_found_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_progress_bar
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_recyclerview
+import kotlinx.android.synthetic.main.fragment_main.fragment_main_scroll_up_button
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_hint_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_recyclerview
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_toolbar
@@ -33,6 +35,7 @@ import ru.khiraevmalik.theguardiannews.presentation.main.mvi.State
 import ru.khiraevmalik.theguardiannews.utils.addOnTextChangedListener
 import ru.khiraevmalik.theguardiannews.utils.addSystemTopPadding
 import ru.khiraevmalik.theguardiannews.utils.hideSoftKeyboard
+import ru.khiraevmalik.theguardiannews.utils.isVisible
 import ru.khiraevmalik.theguardiannews.utils.rippleClick
 import ru.khiraevmalik.theguardiannews.utils.showSoftKeyboard
 import ru.khiraevmalik.theguardiannews.utils.visible
@@ -40,15 +43,18 @@ import ru.khiraevmalik.theguardiannews.utils.visible
 class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     companion object {
-        private const val TOOLBAR_SEARCH_TRANSITION_DELAY = 200L
+        private const val TRANSITION_DELAY = 200L
+        private const val MIN_FIRST_VISIBLE_POSITION_TO_SHOW_SCROLL_UP_BUTTON = 15
         private const val PREFETCH_DISTANCE = 5
         fun newInstance() = NewsListFragment()
     }
 
     private val fade: Transition = Fade().apply {
-        duration = TOOLBAR_SEARCH_TRANSITION_DELAY
+        duration = TRANSITION_DELAY
         mode = Visibility.MODE_IN
     }
+
+    private val scrollUpButtonFade: Transition = Fade().apply { duration = TRANSITION_DELAY }
 
     private val showKeyboardPostDelayed = Runnable {
         showSoftKeyboard(include_search_toolbar_edit_text)
@@ -58,6 +64,9 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     private val searchAdapter = NewsAdapter()
     private val scrollListener = LinearLayoutManagerRecyclerViewOnScrollListener(PREFETCH_DISTANCE) {
         vm.proceed(Action.User.FetchMore)
+    }
+    private val scrollListenerForScrollUpButton = ScrollUpButtonVisibilityOnScrollListener(MIN_FIRST_VISIBLE_POSITION_TO_SHOW_SCROLL_UP_BUTTON) { visible ->
+        onScrollUpVisibilityChanged(visible)
     }
 
     private val vm by viewModel<MainNewsViewModel>()
@@ -76,9 +85,11 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     private fun initViews() {
         include_search_toolbar_search_button.rippleClick {
             vm.proceed(Action.User.SearchOpen)
+            onScrollUpVisibilityChanged(false)
         }
         include_search_toolbar_back_title_button.rippleClick {
             vm.proceed(Action.User.SearchClose)
+            onScrollUpVisibilityChanged(false)
         }
         include_search_toolbar_clear_edit_text_button.rippleClick {
             vm.proceed(Action.User.SearchClear)
@@ -95,11 +106,23 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         include_no_data_with_retry_stub_button.rippleClick {
             vm.proceed(Action.User.FetchNews)
         }
+        fragment_main_scroll_up_button.rippleClick {
+            if (fragment_main_recyclerview.isVisible()) {
+                fragment_main_recyclerview.scrollToPosition(0)
+            } else if (fragment_main_search_recyclerview.isVisible()) {
+                fragment_main_search_recyclerview.scrollToPosition(0)
+            }
+            onScrollUpVisibilityChanged(false)
+        }
         fragment_main_recyclerview.setHasFixedSize(true)
         fragment_main_recyclerview.adapter = adapter
         fragment_main_recyclerview.addOnScrollListener(scrollListener)
+        fragment_main_recyclerview.addOnScrollListener(scrollListenerForScrollUpButton)
+        fragment_main_search_recyclerview.addOnScrollListener(scrollListenerForScrollUpButton)
         fragment_main_search_recyclerview.setHasFixedSize(true)
         fragment_main_search_recyclerview.adapter = searchAdapter
+
+        scrollUpButtonFade.addTarget(fragment_main_scroll_up_button)
     }
 
     private fun initStateObserver() {
@@ -151,7 +174,14 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun focusSearchEditText() {
-        include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TOOLBAR_SEARCH_TRANSITION_DELAY)
+        include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TRANSITION_DELAY)
+    }
+
+    private fun onScrollUpVisibilityChanged(visible: Boolean) {
+        if (visible xor fragment_main_scroll_up_button.isVisible()) {
+            TransitionManager.beginDelayedTransition(fragment_main_container, scrollUpButtonFade)
+            fragment_main_scroll_up_button.visible(visible)
+        }
     }
 
     private fun updateViewsVisibility(state: State) {
