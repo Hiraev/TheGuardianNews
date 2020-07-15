@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_main.fragment_main_recyclerview
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_scroll_up_button
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_hint_stub
 import kotlinx.android.synthetic.main.fragment_main.fragment_main_search_recyclerview
-import kotlinx.android.synthetic.main.fragment_main.fragment_main_toolbar
+import kotlinx.android.synthetic.main.fragment_main.fragment_main_status_bar
 import kotlinx.android.synthetic.main.include_error_with_retry_stub.include_error_with_retry_stub_button
 import kotlinx.android.synthetic.main.include_no_data_with_retry_stub.include_no_data_with_retry_stub_button
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_back_title_button
@@ -163,7 +163,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun setWindowInsetsListener(view: View) {
-        view.addSystemTopPadding(fragment_main_toolbar)
+        view.addSystemTopPadding(fragment_main_status_bar)
     }
 
     private fun showOrHideSearchToolbar(show: Boolean) {
