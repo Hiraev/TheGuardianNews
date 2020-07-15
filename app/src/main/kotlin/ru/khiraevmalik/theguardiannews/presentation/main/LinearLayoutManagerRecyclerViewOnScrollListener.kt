@@ -1,4 +1,4 @@
-package ru.khiraevmalik.theguardiannews.presentation.main.mvi
+package ru.khiraevmalik.theguardiannews.presentation.main
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
