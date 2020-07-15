@@ -29,9 +29,11 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "THE_GUARDIAN_API_KEY", "\"$the_guardian_api_key_debug\""
+            buildConfigField "String", "THE_GUARDIAN_API_URL", "\"https://content.guardianapis.com\""
         }
         release {
             buildConfigField "String", "THE_GUARDIAN_API_KEY", "\"$the_guardian_api_key_release\""
+            buildConfigField "String", "THE_GUARDIAN_API_URL", "\"https://content.guardianapis.com\""
         }
     }
 }

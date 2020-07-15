@@ -5,9 +5,9 @@ import ru.khiraevmalik.theguardiannews.data.BuildConfig
 object Api {
 
     object TheGuardian {
-        const val baseUrl = "https://content.guardianapis.com"
-        const val api_key = "api-key"
+        const val baseUrl = BuildConfig.THE_GUARDIAN_API_URL
         const val api_key_value = BuildConfig.THE_GUARDIAN_API_KEY
+        const val api_key = "api-key"
 
         object Path {
             const val search = "search?$api_key=$api_key_value&${Params.showFieldsParams}"
