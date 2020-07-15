@@ -18,7 +18,7 @@ class MainStore(
         private const val DEBUG_STRING_PATTERN = "%s -> %s by %s"
     }
 
-    override fun onAct(action: Action, oldState: State, newState: State) {
+    override fun onProceed(action: Action, oldState: State, newState: State) {
         if (BuildConfig.DEBUG) {
             Log.d(
                     DEBUG_TAG,
