@@ -8,7 +8,7 @@ class LinearLayoutManagerRecyclerViewOnScrollListener(
         private val onScrolledCallback: () -> Unit
 ) : RecyclerView.OnScrollListener() {
 
-    private var enabled = true
+    private var enabled = false
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
