@@ -1,6 +1,7 @@
 package ru.khiraevmalik.theguardiannews.presentation.main.mvi
 
-import ru.khiraevmalik.theguardiannews.presentation.main.NewsItem
+import ru.khiraevmalik.theguardiannews.base.PagingStatus
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
 
 sealed class Action {
 
@@ -27,8 +28,7 @@ sealed class Action {
 
         object FetchLoading : Effect()
         object FetchError : Effect()
-        class FetchSuccess(val news: List<NewsItem>) : Effect()
-        class FetchFullData(val news: List<NewsItem>) : Effect()
+        class FetchSuccess(val news: List<NewsItem>, val pagingStatus: PagingStatus) : Effect()
     }
 
 }

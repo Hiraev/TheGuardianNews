@@ -28,7 +28,10 @@ import kotlinx.android.synthetic.main.include_search_toolbar.include_search_tool
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_title_group
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.khiraevmalik.theguardiannews.R
+import ru.khiraevmalik.theguardiannews.base.PagingStatus
 import ru.khiraevmalik.theguardiannews.presentation.BaseFragment
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsAdapter
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.Action
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MainNews
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.State
@@ -39,28 +42,29 @@ import ru.khiraevmalik.theguardiannews.utils.isVisible
 import ru.khiraevmalik.theguardiannews.utils.rippleClick
 import ru.khiraevmalik.theguardiannews.utils.showSoftKeyboard
 import ru.khiraevmalik.theguardiannews.utils.visible
+import ru.khiraevmalik.theguardiannews.utils.visibleWithCheck
 
 class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     companion object {
-        private const val TRANSITION_DELAY = 200L
+        private const val TRANSITION_DURATION = 200L
         private const val MIN_FIRST_VISIBLE_POSITION_TO_SHOW_SCROLL_UP_BUTTON = 15
         private const val PREFETCH_DISTANCE = 5
         fun newInstance() = NewsListFragment()
     }
 
     private val fade: Transition = Fade().apply {
-        duration = TRANSITION_DELAY
+        duration = TRANSITION_DURATION
         mode = Visibility.MODE_IN
     }
 
-    private val scrollUpButtonFade: Transition = Fade().apply { duration = TRANSITION_DELAY }
+    private val scrollUpButtonFade: Transition = Fade().apply { duration = TRANSITION_DURATION }
 
     private val showKeyboardPostDelayed = Runnable {
         showSoftKeyboard(include_search_toolbar_edit_text)
     }
 
-    private val adapter = NewsAdapter()
+    private val adapter = NewsAdapter { vm.proceed(Action.User.Retry) }
     private val searchAdapter = NewsAdapter()
     private val scrollListener = LinearLayoutManagerRecyclerViewOnScrollListener(PREFETCH_DISTANCE) {
         vm.proceed(Action.User.FetchMore)
@@ -144,15 +148,17 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                     showOrHideSearchToolbar(false)
                 }
                 is State.Fetch.Success -> {
-                    adapter.submitList(state.news)
                     showOrHideSearchToolbar(false)
-                }
-                is State.Fetch.FullData -> {
-                    adapter.submitList(state.news)
-                    showOrHideSearchToolbar(false)
+                    if (state.pagingStatus == PagingStatus.HAS_MORE) scrollListener.enable() else scrollListener.disable()
+
+                    adapter.submitList(state.news + when (state.pagingStatus) {
+                        PagingStatus.FULL -> listOf(NewsItem.FullDataItem)
+                        PagingStatus.ERROR -> listOf(NewsItem.ErrorLoadingMore)
+                        PagingStatus.LOADING -> listOf(NewsItem.LoadingMore)
+                        else -> emptyList()
+                    })
                 }
             }
-            if (state is State.Fetch.Success) scrollListener.enable() else scrollListener.disable()
             updateViewsVisibility(state)
         })
         vm.events.observe(viewLifecycleOwner, Observer { event ->
@@ -168,30 +174,30 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun showOrHideSearchToolbar(show: Boolean) {
         TransitionManager.beginDelayedTransition(include_search_toolbar_container, fade)
-        include_search_toolbar_search_group.visible(show)
-        include_search_toolbar_title_group.visible(!show)
+        include_search_toolbar_search_group.visibleWithCheck(show)
+        include_search_toolbar_title_group.visibleWithCheck(!show)
         if (show) focusSearchEditText() else hideSoftKeyboard(include_search_toolbar_edit_text)
     }
 
     private fun focusSearchEditText() {
-        include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TRANSITION_DELAY)
+        include_search_toolbar_edit_text.postDelayed(showKeyboardPostDelayed, TRANSITION_DURATION)
     }
 
     private fun onScrollUpVisibilityChanged(visible: Boolean) {
         if (visible xor fragment_main_scroll_up_button.isVisible()) {
             TransitionManager.beginDelayedTransition(fragment_main_container, scrollUpButtonFade)
-            fragment_main_scroll_up_button.visible(visible)
+            fragment_main_scroll_up_button.visibleWithCheck(visible)
         }
     }
 
     private fun updateViewsVisibility(state: State) {
-        fragment_main_progress_bar.visible(state is State.Fetch.Loading || state is State.Search.Loading)
-        fragment_main_not_found_stub.visible(state is State.Search.NotFound)
-        fragment_main_no_data_with_retry_stub.visible(state is State.Fetch.EmptyData)
-        fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error || state is State.Search.Error)
-        fragment_main_search_recyclerview.visible(state is State.Search.Success)
-        fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Fetch.FullData)
-        fragment_main_search_hint_stub.visible(state is State.Search.Idle)
+        fragment_main_progress_bar.visibleWithCheck(state is State.Fetch.Loading || state is State.Search.Loading)
+        fragment_main_not_found_stub.visibleWithCheck(state is State.Search.NotFound)
+        fragment_main_no_data_with_retry_stub.visibleWithCheck(state is State.Fetch.EmptyData)
+        fragment_main_error_with_retry_stub.visibleWithCheck(state is State.Fetch.Error || state is State.Search.Error)
+        fragment_main_search_recyclerview.visibleWithCheck(state is State.Search.Success)
+        fragment_main_recyclerview.visibleWithCheck(state is State.Fetch.Success)
+        fragment_main_search_hint_stub.visibleWithCheck(state is State.Search.Idle)
     }
 
 }

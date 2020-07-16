@@ -1,6 +1,7 @@
 package ru.khiraevmalik.theguardiannews.presentation.main.mvi
 
-import ru.khiraevmalik.theguardiannews.presentation.main.NewsItem
+import ru.khiraevmalik.theguardiannews.base.PagingStatus
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
 
 sealed class State {
 
@@ -8,8 +9,7 @@ sealed class State {
         object Loading : Fetch()
         object Error : Fetch()
         object EmptyData : Fetch()
-        class Success(val news: List<NewsItem>) : Fetch()
-        class FullData(val news: List<NewsItem>) : Fetch()
+        class Success(val news: List<NewsItem>, val pagingStatus: PagingStatus) : Fetch()
     }
 
     sealed class Search : State() {

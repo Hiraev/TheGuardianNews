@@ -65,7 +65,7 @@ abstract class Store<A, U, E, S, N>(
         if (Looper.myLooper() != Looper.getMainLooper()) throw IllegalStateException("proceed function must be called on main thread")
         val newState = reducer.reduce(action, state)
         middleware.forEach { m -> m.handle(action, state) }
-        onAct(action, state, newState)
+        onProceed(action, state, newState)
         state = newState
     }
 
@@ -75,7 +75,7 @@ abstract class Store<A, U, E, S, N>(
         middleware.forEach(Middleware<A, E, S, N>::dispose)
     }
 
-    open fun onAct(action: A, oldState: S, newState: S) {}
+    open fun onProceed(action: A, oldState: S, newState: S) {}
 
     private fun onEffect(effect: E) {
         proceed(effect)

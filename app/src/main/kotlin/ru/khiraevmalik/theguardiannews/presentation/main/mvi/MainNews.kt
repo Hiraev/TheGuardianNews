@@ -4,8 +4,4 @@ sealed class MainNews {
     sealed class Search : MainNews() {
         object ClearSearchEditText : Search()
     }
-
-    sealed class Fetch : MainNews() {
-        object ErrorLoadingMore : Fetch()
-    }
 }
