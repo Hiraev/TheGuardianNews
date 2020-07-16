@@ -174,8 +174,8 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun showOrHideSearchToolbar(show: Boolean) {
         TransitionManager.beginDelayedTransition(include_search_toolbar_container, fade)
-        include_search_toolbar_search_group.visible(show)
-        include_search_toolbar_title_group.visible(!show)
+        include_search_toolbar_search_group.visibleWithCheck(show)
+        include_search_toolbar_title_group.visibleWithCheck(!show)
         if (show) focusSearchEditText() else hideSoftKeyboard(include_search_toolbar_edit_text)
     }
 
@@ -186,18 +186,18 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
     private fun onScrollUpVisibilityChanged(visible: Boolean) {
         if (visible xor fragment_main_scroll_up_button.isVisible()) {
             TransitionManager.beginDelayedTransition(fragment_main_container, scrollUpButtonFade)
-            fragment_main_scroll_up_button.visible(visible)
+            fragment_main_scroll_up_button.visibleWithCheck(visible)
         }
     }
 
     private fun updateViewsVisibility(state: State) {
-        fragment_main_progress_bar.visible(state is State.Fetch.Loading || state is State.Search.Loading)
-        fragment_main_not_found_stub.visible(state is State.Search.NotFound)
-        fragment_main_no_data_with_retry_stub.visible(state is State.Fetch.EmptyData)
-        fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error || state is State.Search.Error)
-        fragment_main_search_recyclerview.visible(state is State.Search.Success)
-        fragment_main_recyclerview.visible(state is State.Fetch.Success)
-        fragment_main_search_hint_stub.visible(state is State.Search.Idle)
+        fragment_main_progress_bar.visibleWithCheck(state is State.Fetch.Loading || state is State.Search.Loading)
+        fragment_main_not_found_stub.visibleWithCheck(state is State.Search.NotFound)
+        fragment_main_no_data_with_retry_stub.visibleWithCheck(state is State.Fetch.EmptyData)
+        fragment_main_error_with_retry_stub.visibleWithCheck(state is State.Fetch.Error || state is State.Search.Error)
+        fragment_main_search_recyclerview.visibleWithCheck(state is State.Search.Success)
+        fragment_main_recyclerview.visibleWithCheck(state is State.Fetch.Success)
+        fragment_main_search_hint_stub.visibleWithCheck(state is State.Search.Idle)
     }
 
 }
