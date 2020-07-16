@@ -3,7 +3,7 @@ package ru.khiraevmalik.theguardiannews.mappers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.khiraevmalik.theguardiannews.news.News
-import ru.khiraevmalik.theguardiannews.presentation.main.NewsItem
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
 
 object NewsMapper {
 
@@ -11,7 +11,7 @@ object NewsMapper {
         news.map(::mapToNewsItem)
     }
 
-    private fun mapToNewsItem(news: News): NewsItem = NewsItem(
+    private fun mapToNewsItem(news: News): NewsItem = NewsItem.Data(
             id = news.id,
             title = news.title,
             subtitle = news.subtitle,

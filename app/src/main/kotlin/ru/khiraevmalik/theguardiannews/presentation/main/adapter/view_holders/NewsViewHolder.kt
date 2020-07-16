@@ -1,4 +1,4 @@
-package ru.khiraevmalik.theguardiannews.presentation.main
+package ru.khiraevmalik.theguardiannews.presentation.main.adapter.view_holders
 
 import android.view.View
 import android.widget.ImageView
@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import ru.khiraevmalik.theguardiannews.R
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
 
 class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -17,7 +18,7 @@ class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val subtitle = view.findViewById<TextView>(R.id.item_news_subtitle)
     private val image = view.findViewById<ImageView>(R.id.item_news_image)
 
-    fun bind(newsItem: NewsItem) {
+    fun bind(newsItem: NewsItem.Data) {
         title.text = newsItem.title
         subtitle.text = newsItem.subtitle
         Glide.with(itemView)

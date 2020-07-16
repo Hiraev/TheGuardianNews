@@ -1,6 +1,6 @@
 package ru.khiraevmalik.theguardiannews.presentation.main.mvi
 
-import ru.khiraevmalik.theguardiannews.presentation.main.NewsItem
+import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
 
 sealed class Action {
 
@@ -29,6 +29,8 @@ sealed class Action {
         object FetchError : Effect()
         class FetchSuccess(val news: List<NewsItem>) : Effect()
         class FetchFullData(val news: List<NewsItem>) : Effect()
+        class FetchMoreDataLoading(val news: List<NewsItem>) : Effect()
+        class FetchMoreDataError(val news: List<NewsItem>) : Effect()
     }
 
 }

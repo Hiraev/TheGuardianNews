@@ -9,4 +9,6 @@
     <string name="empty_news_subtitle">Новостей пока нет, попробуйте позже.</string>
     <string name="check_internet_connection">Проверьте подключение к сети Интернет</string>
     <string name="scroll_up_text">Вверх</string>
+    <string name="all_news_loaded">Все новости загружены</string>
+    <string name="load_more_news_error">Ошибка при загрузке новостей</string>
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginStart="@dimen/global_medium_margin"
+    android:layout_marginTop="@dimen/global_medium_margin"
+    android:layout_marginEnd="@dimen/global_medium_margin"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/global_medium_margin">
+
+    <TextView
+        android:id="@+id/item_news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/global_medium_margin"
+        android:layout_marginEnd="@dimen/global_medium_margin"
+        android:gravity="center"
+        android:text="@string/load_more_news_error"
+        android:textAppearance="@style/TextAppearance14M"
+        android:textColor="@color/text_color_gray_light" />
+
+    <TextView
+        android:id="@+id/item_loading_more_error_retry_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/global_medium_margin"
+        android:background="@drawable/bg_ripple_gray_round_corners_4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="@dimen/global_medium_margin"
+        android:paddingVertical="@dimen/global_small_margin"
+        android:text="@string/retry"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance15M"
+        android:textColor="@color/colorPrimary" />
+
+</LinearLayout>
