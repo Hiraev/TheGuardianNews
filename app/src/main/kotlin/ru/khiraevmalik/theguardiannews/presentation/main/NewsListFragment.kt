@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.include_search_toolbar.include_search_tool
 import kotlinx.android.synthetic.main.include_search_toolbar.include_search_toolbar_title_group
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.khiraevmalik.theguardiannews.R
+import ru.khiraevmalik.theguardiannews.base.PagingStatus
 import ru.khiraevmalik.theguardiannews.presentation.BaseFragment
 import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsAdapter
 import ru.khiraevmalik.theguardiannews.presentation.main.adapter.NewsItem
@@ -41,6 +42,7 @@ import ru.khiraevmalik.theguardiannews.utils.isVisible
 import ru.khiraevmalik.theguardiannews.utils.rippleClick
 import ru.khiraevmalik.theguardiannews.utils.showSoftKeyboard
 import ru.khiraevmalik.theguardiannews.utils.visible
+import ru.khiraevmalik.theguardiannews.utils.visibleWithCheck
 
 class NewsListFragment : BaseFragment(R.layout.fragment_main) {
 
@@ -146,24 +148,15 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
                     showOrHideSearchToolbar(false)
                 }
                 is State.Fetch.Success -> {
-                    adapter.submitList(state.news)
                     showOrHideSearchToolbar(false)
-                    scrollListener.enable()
-                }
-                is State.Fetch.FullData -> {
-                    adapter.submitList(state.news + NewsItem.FullDataItem)
-                    showOrHideSearchToolbar(false)
-                    scrollListener.disable()
-                }
-                is State.Fetch.MoreDataLoadingError -> {
-                    adapter.submitList(state.news + NewsItem.ErrorLoadingMore)
-                    showOrHideSearchToolbar(false)
-                    scrollListener.disable()
-                }
-                is State.Fetch.MoreDataLoading -> {
-                    adapter.submitList(state.news + NewsItem.LoadingMore)
-                    showOrHideSearchToolbar(false)
-                    scrollListener.disable()
+                    if (state.pagingStatus == PagingStatus.HAS_MORE) scrollListener.enable() else scrollListener.disable()
+
+                    adapter.submitList(state.news + when (state.pagingStatus) {
+                        PagingStatus.FULL -> listOf(NewsItem.FullDataItem)
+                        PagingStatus.ERROR -> listOf(NewsItem.ErrorLoadingMore)
+                        PagingStatus.LOADING -> listOf(NewsItem.LoadingMore)
+                        else -> emptyList()
+                    })
                 }
             }
             updateViewsVisibility(state)
@@ -203,7 +196,7 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         fragment_main_no_data_with_retry_stub.visible(state is State.Fetch.EmptyData)
         fragment_main_error_with_retry_stub.visible(state is State.Fetch.Error || state is State.Search.Error)
         fragment_main_search_recyclerview.visible(state is State.Search.Success)
-        fragment_main_recyclerview.visible(state is State.Fetch.Success || state is State.Fetch.FullData || state is State.Fetch.MoreDataLoading || state is State.Fetch.MoreDataLoadingError)
+        fragment_main_recyclerview.visible(state is State.Fetch.Success)
         fragment_main_search_hint_stub.visible(state is State.Search.Idle)
     }
 
