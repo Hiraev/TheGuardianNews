@@ -9,6 +9,7 @@ import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MainReducer
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.MainStore
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.NewsFeedMiddleware
 import ru.khiraevmalik.theguardiannews.presentation.main.mvi.SearchMiddleware
+import ru.khiraevmalik.theguardiannews.presentation.news_view.NewsViewViewModel
 import ru.khiraevmalik.theguardiannews.routing.RootRouter
 import ru.terrakok.cicerone.Cicerone
 
@@ -20,7 +21,8 @@ val navigationModule = module {
 
 val viewModelsModule = module {
     viewModel { RootActivityViewModel(get(), get()) }
-    viewModel { MainNewsViewModel(get()) }
+    viewModel { MainNewsViewModel(get(), get()) }
+    viewModel { NewsViewViewModel(get()) }
 }
 
 private val MVI_MAIN_MIDDLEWARE = StringQualifier("MVI_MAIN_MIDDLEWARE")

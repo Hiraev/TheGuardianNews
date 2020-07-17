@@ -15,6 +15,7 @@ object NewsMapper {
             id = news.id,
             title = news.title,
             subtitle = news.subtitle,
-            imageUrl = news.imageUrl
+            imageUrl = news.imageUrl,
+            body = news.text
     )
 }

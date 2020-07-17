@@ -41,7 +41,6 @@ import ru.khiraevmalik.theguardiannews.utils.hideSoftKeyboard
 import ru.khiraevmalik.theguardiannews.utils.isVisible
 import ru.khiraevmalik.theguardiannews.utils.rippleClick
 import ru.khiraevmalik.theguardiannews.utils.showSoftKeyboard
-import ru.khiraevmalik.theguardiannews.utils.visible
 import ru.khiraevmalik.theguardiannews.utils.visibleWithCheck
 
 class NewsListFragment : BaseFragment(R.layout.fragment_main) {
@@ -125,7 +124,12 @@ class NewsListFragment : BaseFragment(R.layout.fragment_main) {
         fragment_main_search_recyclerview.addOnScrollListener(scrollListenerForScrollUpButton)
         fragment_main_search_recyclerview.setHasFixedSize(true)
         fragment_main_search_recyclerview.adapter = searchAdapter
-
+        adapter.setItemClickListener { newsItem ->
+            (newsItem as? NewsItem.Data)?.let { vm.openNewsView(it) }
+        }
+        searchAdapter.setItemClickListener { newsItem ->
+            (newsItem as? NewsItem.Data)?.let { vm.openNewsView(it) }
+        }
         scrollUpButtonFade.addTarget(fragment_main_scroll_up_button)
     }
 

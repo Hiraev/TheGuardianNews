@@ -10,4 +10,7 @@
     <dimen name="global_small_elevation">2dp</dimen>
     <dimen name="global_elevation">4dp</dimen>
 
+    <integer name="fragment_navigation_slide_enter_duration">190</integer>
+    <integer name="fragment_navigation_slide_exit_duration">200</integer>
+
 </resources>
