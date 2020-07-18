@@ -8,8 +8,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:focusableInTouchMode="true">
 
     <!--  Dummy view for status bar background  -->
     <FrameLayout
