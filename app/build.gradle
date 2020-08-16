@@ -82,14 +82,6 @@ android {
         }
     }
 
-    // For apk
-    splits {
-        density.enable true
-        abi.enable true
-        abi.universalApk false
-        language.enable true
-    }
-
     // For app bundle
     bundle {
         language {
