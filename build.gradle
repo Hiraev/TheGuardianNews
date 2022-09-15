@@ -3,10 +3,10 @@ buildscript {
     ext.application_id = 'ru.khiraevmalik.theguardiannews'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.0"
+        classpath "com.android.tools.build:gradle:4.0.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -14,7 +14,8 @@ buildscript {
 subprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
     }
     apply from: "${rootProject.projectDir}/dependencies.gradle"
     apply from: "${rootProject.projectDir}/versions.gradle"
